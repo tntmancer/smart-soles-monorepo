@@ -2,82 +2,59 @@ import os
 import subprocess
 import json
 
-# Assuming this script, ntop file, and json files will be in the same folde
-import os
-
-current_directory = os.path.dirname(os.path.realpath(__file__))
-exe_path = os.path.join("C:", "Program Files", "nTopology", "nTopology", "nTopCL.exe")
-ntop_file_path = os.path.join(current_directory, "RelDensity.ntop")
-output_directory = os.path.join(current_directory, "RelDensity")
-input_file_name = os.path.join(current_directory, "input{}.json")
-output_file_name = os.path.join(output_directory, "out{}.json")
-
+# Constants
+EXE_PATH = os.path.join("C:", "Program Files", "nTopology", "nTopology", "nTopCL.exe")
+NTOP_FILE_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), "RelDensity.ntop")
+CURRENT_DIRECTORY = os.path.dirname(os.path.realpath(__file__))
+OUTPUT_DIRECTORY = os.path.join(CURRENT_DIRECTORY, "RelDensity")
+INPUT_FILE_TEMPLATE = os.path.join(CURRENT_DIRECTORY, "input{}.json")
+OUTPUT_FILE_TEMPLATE = os.path.join(OUTPUT_DIRECTORY, "out{}.json")
 
 # Input variables in JSON structure
-thickness_values = [round(x * 0.1, 1) for x in range(1, 21)] # List of thickness values from 0.1 to 2 with increments of 0.1
-cellsize_values = [round(x * 0.5, 1) for x in range(1, 21)] # List of L values from 0.5 to 10 with increments of 0.5
+THICKNESS_VALUES = [round(x * 0.1, 1) for x in range(1, 21)]  # List of thickness values from 0.1 to 2.0
+CELLSIZE_VALUES = [round(x * 0.5, 1) for x in range(1, 21)]  # List of L values from 0.5 to 10.0
 
-# Iterate over each cell size value
-for i, cellsize in enumerate(cellsize_values):
-    input_json = {
-    "description": "",
-    "inputs": [
-        {
-            "description": "",
-            "name": "Output directory",
-            "type": "text",
-            "value": output_directory
-        },
-        {
-            "description": "",
-            "name": "Unit cell",
-            "type": "enum",
-            "value": 0
-        },
-        {
-            "description": "",
-            "name": "L",
-            "type": "real",
-            "units": "mm",
-            "value": 10.0
-        },
-        {
-            "description": "",
-            "name": "Unit Cell Size",
-            "type": "real",
-            "units": "mm",
-            "value": cellsize
-        },
-        {
-            "description": "",
-            "name": "Thickness",
-            "type": "real",
-            "units": "mm",
-            "values": thickness_values
-        }
+def create_input_json(cellsize, index):
+    """Creates an input JSON file for nTopCL."""
+    input_data = {
+        "description": "",
+        "inputs": [
+            {"description": "", "name": "Output directory", "type": "text", "value": OUTPUT_DIRECTORY},
+            {"description": "", "name": "Unit cell", "type": "enum", "value": 0},
+            {"description": "", "name": "L", "type": "real", "units": "mm", "value": 10.0},
+            {"description": "", "name": "Unit Cell Size", "type": "real", "units": "mm", "value": cellsize},
+            {"description": "", "name": "Thickness", "type": "real", "units": "mm", "values": THICKNESS_VALUES}
         ],
-    "title": "Relative Density of Walled TPMS"
+        "title": "Relative Density of Walled TPMS"
     }
+    input_file = INPUT_FILE_TEMPLATE.format(index + 1)
+    with open(input_file, 'w', encoding='utf-8') as outfile:
+        json.dump(input_data, outfile, indent=4)
+    return input_file
 
-    # Create input.json file
-    input_file_name = input_file_name.format(i + 1)
-    with open(input_file_name, 'w') as outfile:
-        json.dump(input_json, outfile, indent=4)
+def run_ntopcl(input_file, index):
+    """Runs nTopCL with the given input file and generates an output file."""
+    output_file = OUTPUT_FILE_TEMPLATE.format(index + 1)
+    arguments = [
+        EXE_PATH,
+        "-j", input_file,
+        "-o", output_file,
+        NTOP_FILE_PATH,
+        "-v2"
+    ]
+    
+    print(f"Running nTopCL with input file: {input_file}")
+    print(" ".join(arguments))
+    
+    # TODO (austin): Need to think about whether we want to use subprocess.Popen or just subprocess.run
+    output, error = subprocess.Popen(arguments, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
+    print(output.decode("utf-8"))
 
-    # nTopCL arguments in a list
-    arguments = [exe_path] # nTopCL path
-    arguments.append("-j") # json input argument
-    arguments.append(input_file_name) # json path
-    arguments.append("-o") # output argument
-    output_file_name = output_file_name.format(i + 1)
-    arguments.append(output_file_name) # output json path
-    arguments.append(ntop_file_path) # .ntop notebook file path
-    arguments.append("-v2")
+def main():
+    """Main function to generate input JSON files and run nTopCL."""
+    for i, cellsize in enumerate(CELLSIZE_VALUES):
+        input_file = create_input_json(cellsize, i)
+        run_ntopcl(input_file, i)
 
-# nTopCL call with arguments
-print("Running nTopCL with input file: {}".format(input_file_name))
-print(" ".join(arguments))
-output, error = subprocess.Popen(arguments, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
-
-# Print the return messages
-print(output.decode("utf-8"))
+if __name__ == "__main__":
+    main()
