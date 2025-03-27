@@ -1,0 +1,64 @@
+15639609949926
+footprints
+AD7745
+
+AD7745ARUZ 
+0
+16
+16
+footprints
+ADG706
+
+
+0
+28
+28
+footprints
+BK-912-TR_MPD
+
+BK-912-TR 
+0
+3
+3
+footprints
+C_0603_1608Metric
+Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator
+capacitor
+0
+2
+2
+footprints
+DF9-16
+
+
+0
+2
+2
+footprints
+R_0402_1005Metric_Pad0.72x0.64mm_HandSolder
+Resistor SMD 0402 (1005 Metric), square (rectangular) end terminal, IPC_7351 nominal with elongated pad for handsoldering. (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator
+resistor handsolder
+0
+2
+2
+footprints
+SOT-23-5
+SOT, 5 Pin (https://www.jedec.org/sites/default/files/docs/Mo-178c.PDF variant AA), generated with kicad-footprint-generator ipc_gullwing_generator.py
+SOT TO_SOT_SMD
+0
+5
+5
+footprints
+SW_JS202011SCQN
+
+JS202011SCQN 
+0
+6
+6
+footprints
+XIAO-nRF52840-Sense-14P-2.54-21X17.8MM
+
+
+0
+22
+22
