@@ -1,0 +1,12 @@
+"Id";"Designator";"Footprint";"Quantity";"Designation";"Supplier and ref";
+1;"U3B1,U7A1,U6A1,U12,U9A1,U15,U4A1,U5B1,U8B1,U7B1,U8A1,U14,U1B1,U2B1,U13,U5A1,U4B1,U16,U11,U3A1,U10B1,U6B1,U9B1,U2A1,U10A1,U1A1";"DF9-16";26;"~";;;
+2;"U18";"XIAO-nRF52840-Sense-14P-2.54-21X17.8MM";1;"Seeed Studio XIAO nRF52840";;;
+3;"U17";"SOT-23-5";1;"MIC5504-3.3YM5-TR";;;
+4;"C1,C2";"C_0603_1608Metric";2;"1uF";;;
+5;"R3";"R_0402_1005Metric_Pad0.72x0.64mm_HandSolder";1;"20k";;;
+6;"SW1";"SW_JS202011SCQN";1;"SW_DIP_x01";;;
+7;"B1";"BK-912-TR_MPD";1;"~";;;
+8;"U20";"SOT-23-5";1;"MCP6001-OT";;;
+9;"U19";"ADG706";1;"ADG706BRUZ-REEL7";;;
+10;"R1";"R_0402_1005Metric_Pad0.72x0.64mm_HandSolder";1;"69k";;;
+11;"R2";"R_0402_1005Metric_Pad0.72x0.64mm_HandSolder";1;"10k";;;

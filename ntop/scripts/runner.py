@@ -50,8 +50,6 @@ def run_ntopcl(input_file, index):
     
     # TODO (austin): Need to think about whether we want to use subprocess.Popen or just subprocess.run
     subprocess.run(arguments, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    # proc = subprocess.Popen(arguments, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    # proc.wait()
     print(f"Completed process {index}\n")
     
 
